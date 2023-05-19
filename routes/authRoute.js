@@ -1,5 +1,5 @@
 import express from "express";
-import {loginController, registerController} from '../controllers/authController.js'
+import {loginController, registerController,confirmPinController} from '../controllers/authController.js'
 import { isReseller, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
@@ -10,6 +10,7 @@ router.post('/register',registerController)
 
 //login
 router.post('/login',loginController)
+router.post('/confirmpin',confirmPinController)
 
 //test route
 router.get('/test',requireSignIn,isReseller,(req,res)=>{

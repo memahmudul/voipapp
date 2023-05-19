@@ -1,0 +1,121 @@
+
+import offerModel from "../models/offerModel.js"
+
+
+
+
+
+
+
+
+
+export const getAllOfferController = async(req,res)=>{
+    try {
+        const {operator,offer_type} = req.body;
+        console.log(operator,offer_type);
+        
+        
+        
+    if(!operator){
+        return res.send({error: 'can not find operator'})
+    }
+
+    if(!offer_type){
+        return res.send({error: 'enter offer type'})
+    }
+    
+    
+    const result = await offerModel.find({operator,offer_type})
+  
+        if(!result){
+            return res.status(201).send({
+                success:false,
+                message: "Do not have any offer"
+            })
+        }else{
+           
+            
+            
+            
+            res.status(200).send({
+                success:true,
+                message: 'offer fetched successfully',
+                
+                result
+            })
+        }
+    
+        
+    } catch (error) {
+        console.log(error);
+        res.status(200).send({
+            success:false,
+            message: "error in fetching all offer",
+            error
+
+        })
+        
+    }
+}
+
+
+
+
+
+
+export const addNewOfferController = async(req,res)=>{
+    try { 
+        const {operator,offer_type,name,validity,price} = req.body
+        console.log(req.body);
+        
+        if(!operator){
+            return res.send({error: 'can not find operator'})
+        }
+        if(!offer_type){
+            return res.send({error: 'can not find offer_type'})
+        }
+        if(!name){
+            return res.send({error: 'can not find offer name'})
+        }
+        if(!validity){
+            return res.send({error: 'can not find validity'})
+        }
+        if(!price){
+            return res.send({error: 'can not find price'})
+        }
+       
+
+
+        const data = await new offerModel({operator,offer_type,name,validity,price}).save()
+       
+        
+        
+            if(!data){
+                return res.status(201).send({
+                    success:false,
+                    message: "Something wrong happend"
+                })
+            }else{
+                res.status(200).send({
+                    success:true,
+                    message: "new offer added successfully",
+                    data
+        
+                })
+               
+            
+                
+           
+            }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(200).send({
+            success:false,
+            message: "error in adding new offer",
+            error
+
+        })
+    }
+       
+}

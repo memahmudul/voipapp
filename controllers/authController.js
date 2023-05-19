@@ -38,7 +38,7 @@ export const registerController = async(req,res)=>{
          //existing username
          if(existingUsername){
              return res.status(200).send({
-                 success:true,
+                 success:false,
                  message: 'Username already exists'
              })
          }
@@ -48,7 +48,7 @@ export const registerController = async(req,res)=>{
         //existing Email
         if(existingEmail){
             return res.status(200).send({
-                success:true,
+                success:false,
                 message: 'Email already exists'
             })
         }
@@ -60,15 +60,16 @@ export const registerController = async(req,res)=>{
          //existing phone
          if(existingPhone){
              return res.status(200).send({
-                 success:true,
-                 message: 'Phone number already existsxx'
+                 success:false,
+                 message: 'Phone number already exists'
              })
          }
 
         //register user
         const hashedPassword = await hashPassword(password)
         //save
-        const user = await new userModel({name,username,country, phone, email, password:hashedPassword, pin, role}).save()
+        const balance='0'
+        const user = await new userModel({name,username,country, phone, email, password:hashedPassword, pin, role,balance}).save()
         res.status(201).send({
             success:true,
             message: 'user registered successfully',
@@ -92,20 +93,20 @@ export const registerController = async(req,res)=>{
 export const loginController = async(req,res)=>{
     try {
       
-        const {phone,password} = req.body
-        if(!phone){
-            return res.send({error: 'phone is required'})
+        const {email,password} = req.body
+        if(!email){
+            return res.send({error: 'Email is required'})
         }
         if(!password){
             return res.send({error: 'Password is required'})
         }
 
         //check user
-        const user = await userModel.findOne({phone})
+        const user = await userModel.findOne({email})
         if(!user){
-            return res.status(404).send({
+            return res.status(201).send({
                 success:false,
-                message: "Phone number is not registered"
+                message: "Email number is not registered"
             })
         }
 
@@ -113,22 +114,26 @@ export const loginController = async(req,res)=>{
 
         const match = await comparePassword(password,user.password)
         if(!match){
-            return res.status(200).send({
+            return res.status(201).send({
                 success: false,
-                message: "Invalid Password"
+                message: "Password does not match"
             })
         }
 
         //token
-        const token = await JWT.sign({_id:user._id},process.env.JWT_SECRET,{expiresIn:'7d'})
+        const token =  JWT.sign({_id:user._id},process.env.JWT_SECRET)
         res.status(200).send({
             success:true,
             message:'Login successfull',
             user:{
                 name: user.name,
+                username:user.username,
                 email: user.email,
                 phone: user.phone,
-                country: user.country
+                role: user.role,
+                balance:user.balance
+
+                
                 
             },
             token
@@ -146,4 +151,48 @@ export const loginController = async(req,res)=>{
     }
 
 
+}
+
+export const confirmPinController = async(req,res)=>{
+    try {
+        const {pin,email} = req.body
+        if(!pin){
+            return res.send({error: 'Pin is required'})
+        }
+        if(!email){
+            return res.send({error: 'User is not registered'})
+        }
+
+        ///verify pin
+         
+         const user = await userModel.findOne({email})
+         if(!user){
+             return res.status(201).send({
+                 success:false,
+                 message: "Email number is not registered"
+             })
+         }
+         const matchPin = user.pin===pin
+         if(!matchPin){
+             return res.status(201).send({
+                 success: false,
+                 message: "Pin is not matched"
+             })
+         }
+         res.status(200).send({
+            success:true,
+            message: 'Pin Matched Successfully',
+           
+        })
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message: "error in pin confirm",
+            error
+
+        })
+        
+    }
 }
