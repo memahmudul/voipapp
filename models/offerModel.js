@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
 const offerSchema = new mongoose.Schema({
-
+    transaction:{
+        type:String,
+        default:'drive-offer'
+        
+    },
+   
 
     operator:{
         type:String,
@@ -30,7 +35,8 @@ const offerSchema = new mongoose.Schema({
         required:true,
        
        
-    }
+    },
+    
     
     
 

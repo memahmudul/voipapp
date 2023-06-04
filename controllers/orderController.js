@@ -11,7 +11,7 @@ import placeOfferOrderModel from "../models/placeOfferOrderModel.js"
 
 export const addMobileBankingOrderController = async(req,res)=>{
     try { 
-        const {receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status} = req.body
+        const {receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!receiver){
             return res.send({error: 'can not find receiver'})
@@ -37,9 +37,12 @@ export const addMobileBankingOrderController = async(req,res)=>{
         if(!status){
             return res.send({error: 'can not find status'})
         }
+        if(!commission){
+            return res.send({error: 'can not find commission'})
+        }
 
 
-        const data = await new mobileBankingModel({receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status}).save()
+        const data = await new mobileBankingModel({receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         
@@ -76,7 +79,7 @@ export const addMobileBankingOrderController = async(req,res)=>{
 export const addBankingOrderController = async(req,res)=>{
     try { 
         
-        const {bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status} = req.body
+        const {bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!bank){
             return res.send({error: 'can not find bank'})
@@ -108,9 +111,13 @@ export const addBankingOrderController = async(req,res)=>{
         if(!status){
             return res.send({error: 'can not find status'})
         }
+        if(!commission){
+            return res.send({error: 'can not find commission'})
+        }
 
 
-        const data = await new bankTransferModel({bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status}).save()
+
+        const data = await new bankTransferModel({bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         console.log(data);
@@ -151,7 +158,7 @@ export const addBillPayOrderController = async(req,res)=>{
         
         let data;
         
-        const {bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status} = req.body
+        const {bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!type){
             return res.send({error: 'can not find type'})
@@ -193,9 +200,13 @@ export const addBillPayOrderController = async(req,res)=>{
             if(!amount){
                 return res.send({error: 'can not find amount'})
             }
+            if(!commission){
+                return res.send({error: 'can not find commission'})
+            }
+    
 
 
-            data = await new billPayModel({bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status}).save()
+            data = await new billPayModel({bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission}).save()
 
         }else if(type==='postpaid'){
             if(!bill_service){
@@ -220,8 +231,12 @@ export const addBillPayOrderController = async(req,res)=>{
             if(!amount){
                 return res.send({error: 'can not find amount'})
             }
+            if(!commission){
+                return res.send({error: 'can not find commission'})
+            }
+    
 
-            data = await new billPayModel({bill_service,type,account_no,amount,sender_username,sender_email,sender_phone,status}).save()
+            data = await new billPayModel({bill_service,type,account_no,amount,sender_username,sender_email,sender_phone,status,commission}).save()
 
         }
         
@@ -268,7 +283,7 @@ export const addBillPayOrderController = async(req,res)=>{
 
 export const addRechargeOrderController = async(req,res)=>{
     try { 
-        const {recipient,operators,type,amount,sender_username,sender_email,sender_phone,status} = req.body
+        const {recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!recipient){
             return res.send({error: 'can not find receiver'})
@@ -294,9 +309,13 @@ export const addRechargeOrderController = async(req,res)=>{
         if(!status){
             return res.send({error: 'can not find status'})
         }
+        if(!commission){
+            return res.send({error: 'can not find commission'})
+        }
+
 
        
-        const data = await new rechargeModel({recipient,operators,type,amount,sender_username,sender_email,sender_phone,status}).save()
+        const data = await new rechargeModel({recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         
@@ -333,7 +352,7 @@ export const addRechargeOrderController = async(req,res)=>{
 
 export const placeOfferOrderController = async(req,res)=>{
     try { 
-        const {recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status} = req.body
+        const {recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!recipient){
             return res.send({error: 'can not find receiver'})
@@ -359,9 +378,13 @@ export const placeOfferOrderController = async(req,res)=>{
         if(!status){
             return res.send({error: 'can not find status'})
         }
+        if(!commission){
+            return res.send({error: 'can not find commission'})
+        }
+
 
        
-        const data = await new placeOfferOrderModel({recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status}).save()
+        const data = await new placeOfferOrderModel({recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         
@@ -674,7 +697,8 @@ export const getAllOfferOrderController = async(req,res)=>{
 export const performTransactionController = async(req,res)=>{
     const session = await conn.startSession();
     try {
-        const {id,status,email,amount} = req.body
+        const {id,status,email,transaction,amount,commission} = req.body
+
         
     if(!id){
         return res.send({error: 'can not find transaction with this id'})
@@ -682,24 +706,59 @@ export const performTransactionController = async(req,res)=>{
     if(!status){
         return res.send({error: 'can not find status'})
     }
+    if(!transaction){
+        return res.send({error: 'can not find transaction type'})
+    }
+    if(!amount){
+        return res.send({error: 'can not find amount'})
+    }
+    if(!commission){
+        return res.send({error: 'can not find commission'})
+    }
+
 
     
     
     session.startTransaction();  
+    if(transaction==='mobile-banking'){
+        await mobileBankingModel.findOneAndUpdate({_id:id},{status},{session})
+        
+        
 
-    // const result = await mobileBankingModel.findOne({_id:id})
-    // log(result)
-    await mobileBankingModel.findOneAndUpdate({_id:id},{status},{session})
+    }else if(transaction==='bill-pay'){
+        await mobileBankingModel.findOneAndUpdate({_id:id},{status},{session})
+
+        
+
+    }else if(transaction==='bank-transfer'){
+        await bankTransferModel.findOneAndUpdate({_id:id},{status},{session})
+
+    }else if(transaction==='mobile-recharge'){
+        await rechargeModel.findOneAndUpdate({_id:id},{status},{session})
+
+    }else if(transaction==='drive-offer'){
+        await placeOfferOrderModel.findOneAndUpdate({_id:id},{status},{session})
+
+    }
+
+    
 
     if(status==='success'){
+        
         const doc = await userModel.findOne({email}).exec()
+        const prevBalance = doc.balance
+        
        
-            const newBalance = parseInt(doc.balance)-parseInt(amount)
+            const newBalance = parseInt(prevBalance)-parseInt(amount)
+
+            
+            const commission_total = parseInt(prevBalance)*parseInt(commission)
+            const finalBalance = newBalance+commission_total
 
        
         
     
-    await userModel.findOneAndUpdate({email},{balance:newBalance.toString()},{session})
+    await userModel.findOneAndUpdate({email},{balance:finalBalance.toString()},{session})
 
     }
 
@@ -715,7 +774,7 @@ export const performTransactionController = async(req,res)=>{
     
     res.status(201).send({
         success:true,
-        message: 'transaction successfull',
+        message: 'transaction updated successfully',
         
         
        

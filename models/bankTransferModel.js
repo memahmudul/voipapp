@@ -62,6 +62,11 @@ const banTransferSchema = new mongoose.Schema({
         
        
     },
+    commission:{
+        type:String,
+        required:true,
+
+    }
     
     
 

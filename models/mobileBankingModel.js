@@ -51,6 +51,11 @@ const mobileBankingSchema = new mongoose.Schema({
         
        
     },
+    commission:{
+        type:String,
+        required:true,
+
+    }
     
     
 

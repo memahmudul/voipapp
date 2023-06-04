@@ -4,9 +4,78 @@ import JWT from "jsonwebtoken"
 
 
 
+export const registerFirstPageController = async(req,res)=>{
+    try {
+        const {name, username, phone, email} = req.body
+        if(!name){
+            return res.send({error: 'name is required'})
+        }
+        if(!username){
+            return res.send({error: 'username is required'})
+        }
+       
+        if(!phone){
+            return res.send({error: 'phone number is required'})
+        }
+        if(!email){
+            return res.send({error: 'Email is required'})
+        }
+
+        //check username
+        const existingUsername = await userModel.findOne({username})
+        //existing username
+        if(existingUsername){
+            return res.status(200).send({
+                success:false,
+                message: 'Username already exists'
+            })
+        }
+
+       //check Email
+       const existingEmail = await userModel.findOne({email})
+       //existing Email
+       if(existingEmail){
+           return res.status(200).send({
+               success:false,
+               message: 'Email already exists'
+           })
+       }
+
+       
+
+        //check phone
+        const existingPhone = await userModel.findOne({phone})
+        //existing phone
+        if(existingPhone){
+            return res.status(200).send({
+                success:false,
+                message: 'Phone number already exists'
+            })
+        }
+
+        res.status(201).send({
+            success:true,
+            message: 'Registartion first page validation success',
+    
+        })
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message: "error in registration first page",
+            error
+
+        })
+        
+        
+    }
+}
+
+
 export const registerController = async(req,res)=>{
     try {
-        const {name, username, country, phone, email, password, pin, role} = req.body
+        const {name, username, phone, email, password, pin, role} = req.body
         //validations
         if(!name){
             return res.send({error: 'name is required'})
@@ -14,9 +83,7 @@ export const registerController = async(req,res)=>{
         if(!username){
             return res.send({error: 'username is required'})
         }
-        if(!country){
-            return res.send({error: 'country is required'})
-        }
+       
         if(!phone){
             return res.send({error: 'phone number is required'})
         }
@@ -33,43 +100,12 @@ export const registerController = async(req,res)=>{
             return res.send({error: 'role is required'})
         }
 
-         //check username
-         const existingUsername = await userModel.findOne({username})
-         //existing username
-         if(existingUsername){
-             return res.status(200).send({
-                 success:false,
-                 message: 'Username already exists'
-             })
-         }
-
-        //check Email
-        const existingEmail = await userModel.findOne({email})
-        //existing Email
-        if(existingEmail){
-            return res.status(200).send({
-                success:false,
-                message: 'Email already exists'
-            })
-        }
-
-        
-
-         //check phone
-         const existingPhone = await userModel.findOne({phone})
-         //existing phone
-         if(existingPhone){
-             return res.status(200).send({
-                 success:false,
-                 message: 'Phone number already exists'
-             })
-         }
-
+       
         //register user
         const hashedPassword = await hashPassword(password)
         //save
         const balance='0'
-        const user = await new userModel({name,username,country, phone, email, password:hashedPassword, pin, role,balance}).save()
+        const user = await new userModel({name,username, phone, email, password:hashedPassword, pin, role,balance}).save()
         res.status(201).send({
             success:true,
             message: 'user registered successfully',
@@ -176,12 +212,12 @@ export const confirmPinController = async(req,res)=>{
          if(!matchPin){
              return res.status(201).send({
                  success: false,
-                 message: "Pin is not matched"
+                 message: "পিন সঠিক নয়।"
              })
          }
          res.status(200).send({
             success:true,
-            message: 'Pin Matched Successfully',
+            message: 'পিন সফলভাবে নিশ্চিত করা হয়েছে',
            
         })
         

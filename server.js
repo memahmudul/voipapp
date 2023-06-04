@@ -7,6 +7,9 @@ import authRoute from './routes/authRoute.js'
 import balanceRoute from './routes/balanceRoute.js'
 import orderRoute from './routes/orderRoute.js'
 import offerRoute from './routes/offerRoute.js'
+import commissionRoute from './routes/commissionRoute.js'
+import sliderRoute from './routes/sliderRoute.js'
+import paymentRoute from './routes/paymentRoute.js'
 import cors from 'cors'
 
 
@@ -30,6 +33,9 @@ app.use("/auth",authRoute)
 app.use("/balance",balanceRoute)
 app.use("/order",orderRoute)
 app.use("/offer",offerRoute)
+app.use("/commission",commissionRoute)
+app.use("/slider",sliderRoute)
+app.use("/payment",paymentRoute)
 
 
 

@@ -1,6 +1,6 @@
 import express from "express";
 import {loginController, registerController,confirmPinController} from '../controllers/authController.js'
-import { getBalanceController} from "../controllers/balanceController.js";
+import { getBalanceController,addBalanceRequestController} from "../controllers/balanceController.js";
 import { isReseller, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
@@ -10,6 +10,7 @@ const router = express.Router()
 
 // router.post('/add-balance',addBalanceController)
 router.post('/get-balance',getBalanceController)
+router.post('/add-balance-request',addBalanceRequestController)
 
 
 

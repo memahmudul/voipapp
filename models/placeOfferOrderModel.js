@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 const placeOfferOrderSchema = new mongoose.Schema({
+    transaction:{
+        type:String,
+        default:'drive-offer'
+        
+    },
+
 
     recipient:{
         type:String,
@@ -52,6 +58,7 @@ const placeOfferOrderSchema = new mongoose.Schema({
         
        
     },
+   
     
     
 
