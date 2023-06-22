@@ -54,4 +54,4 @@ app.get('/',(req,res)=>{
 
 
   //run listen
-  app.listen(PORT,'192.168.248.1')
+  app.listen(PORT,'0.0.0.0')
