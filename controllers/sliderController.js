@@ -50,6 +50,63 @@ export const addSliderImageController = async(req,res)=>{
 }
 
 
+
+export const editSliderImageController = async(req,res)=>{
+    try { 
+        const {image_array} = req.body
+
+        console.log(image_array);
+        
+        
+        if(!image_array){
+            return res.send({error: 'can not find image_array'})
+        }
+
+
+        const images = image_array
+       
+
+        
+
+       
+
+
+        const data = await sliderImageModel.findOneAndUpdate({},{images})
+       
+        
+        
+            if(!data){
+                return res.status(201).send({
+                    success:false,
+                    message: "Something wrong happened"
+                })
+            }else{
+                res.status(200).send({
+                    success:true,
+                    message: "slider image  table edited successfully",
+                   
+        
+                })
+               
+            
+                
+           
+            }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(200).send({
+            success:false,
+            message: "error in editing  slider image table",
+            error
+
+        })
+    }
+       
+}
+
+
+
 export const getSliderImageController = async(req,res)=>{
     try {
        

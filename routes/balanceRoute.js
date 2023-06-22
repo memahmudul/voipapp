@@ -9,8 +9,8 @@ const router = express.Router()
 //Register || METHOD  POST
 
 // router.post('/add-balance',addBalanceController)
-router.post('/get-balance',getBalanceController)
-router.post('/add-balance-request',addBalanceRequestController)
+router.post('/get-balance',requireSignIn,getBalanceController)
+router.post('/add-balance-request',requireSignIn,addBalanceRequestController)
 
 
 

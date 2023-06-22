@@ -9,7 +9,7 @@ import { addBankingOrderController,
     getAllBillPayOrderController, 
     getAllRechargeOrderController,
     getAllOfferOrderController } from "../controllers/orderController.js";
-import { isReseller, requireSignIn } from "../middlewares/authMiddleware.js";
+import { isReseller, requireAdminSignIn, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
 const router = express.Router()
@@ -31,7 +31,7 @@ router.post('/get-all-offer-order',requireSignIn,getAllOfferOrderController)
 
 
 //Admin
-router.post('/edit-mobile-banking-order',performTransactionController)
+router.post('/edit-transaction-order',requireAdminSignIn,performTransactionController)
 
 
 

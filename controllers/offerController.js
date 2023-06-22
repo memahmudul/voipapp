@@ -60,6 +60,48 @@ export const getAllOfferController = async(req,res)=>{
 
 
 
+export const getAllOfferByAdminController = async(req,res)=>{
+    try {
+      
+        
+        
+    
+    
+    const result = await offerModel.find({})
+  
+        if(!result){
+            return res.status(201).send({
+                success:false,
+                message: "Do not have any offer"
+            })
+        }else{
+           
+            
+            
+            
+            res.status(200).send({
+                success:true,
+                message: 'offer fetched successfully',
+                
+                result
+            })
+        }
+    
+        
+    } catch (error) {
+        console.log(error);
+        res.status(200).send({
+            success:false,
+            message: "error in fetching all offer",
+            error
+
+        })
+        
+    }
+}
+
+
+
 
 
 
@@ -113,6 +155,56 @@ export const addNewOfferController = async(req,res)=>{
         res.status(200).send({
             success:false,
             message: "error in adding new offer",
+            error
+
+        })
+    }
+       
+}
+
+
+
+
+export const deleteAnOfferController = async(req,res)=>{
+    try { 
+        const {id} = req.body
+       
+        
+        if(!id){
+            return res.send({error: 'can not find ID'})
+        }
+       
+
+
+        const data = await offerModel.findByIdAndDelete({_id:id})
+
+        console.log(data);
+       
+        
+        
+            if(!data){
+                return res.status(201).send({
+                    success:false,
+                    message: "Something wrong happend"
+                })
+            }else{
+                res.status(200).send({
+                    success:true,
+                    message: "offer deleted successfully",
+                    data
+        
+                })
+               
+            
+                
+           
+            }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(200).send({
+            success:false,
+            message: "error in deleting offer",
             error
 
         })

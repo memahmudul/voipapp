@@ -20,4 +20,6 @@ router.get('/test',requireSignIn,isReseller,(req,res)=>{
     })
 
 })
+
+//admin auth
 export default router;
