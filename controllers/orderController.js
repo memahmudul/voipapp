@@ -754,8 +754,8 @@ export const performTransactionController = async(req,res)=>{
             const newBalance = parseInt(prevBalance)-parseInt(amount)
 
             
-            const commission_total = parseInt(prevBalance)*parseInt(commission)
-            const finalBalance = newBalance+commission_total
+            const commission_total = parseFloat(prevBalance)*parseFloat(commission)
+            const finalBalance = parseInt(newBalance+commission_total)
 
        
         
