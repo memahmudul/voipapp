@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 
 const placeOfferOrderSchema = new mongoose.Schema({
+
+    admin:{
+        type: String,
+        required: true,
+        
+
+
+    },
     transaction:{
         type:String,
         default:'drive-offer'

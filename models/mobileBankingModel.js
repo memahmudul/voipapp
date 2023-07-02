@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
 const mobileBankingSchema = new mongoose.Schema({
+    admin:{
+        type: String,
+        required: true,
+        
+
+
+    },
     transaction:{
         type:String,
         default:'mobile-banking'

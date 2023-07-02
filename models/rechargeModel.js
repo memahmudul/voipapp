@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 
 const rechargeSchema = new mongoose.Schema({
+    admin:{
+        type: String,
+        required: true,
+        
+
+
+    },
+    
     transaction:{
         type:String,
         default:'mobile-recharge'

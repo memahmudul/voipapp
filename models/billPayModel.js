@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
 const billPaySchema = new mongoose.Schema({
+    admin:{
+        type: String,
+        required: true,
+        
+
+
+    },
     transaction:{
         type:String,
         default:'bill-pay'

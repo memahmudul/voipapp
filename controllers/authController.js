@@ -6,7 +6,7 @@ import JWT from "jsonwebtoken"
 
 export const registerFirstPageController = async(req,res)=>{
     try {
-        const {name, username, phone, email} = req.body
+        const {name, username, phone, email,admin} = req.body
         if(!name){
             return res.send({error: 'name is required'})
         }
@@ -19,6 +19,10 @@ export const registerFirstPageController = async(req,res)=>{
         }
         if(!email){
             return res.send({error: 'Email is required'})
+        }
+
+        if(!admin){
+            return res.send({error: 'Admin Name is required'})
         }
 
         //check username
@@ -75,7 +79,7 @@ export const registerFirstPageController = async(req,res)=>{
 
 export const registerController = async(req,res)=>{
     try {
-        const {name, username, phone, email, password, pin, role} = req.body
+        const {name, username, phone, email,admin, password, pin, role} = req.body
         //validations
         if(!name){
             return res.send({error: 'name is required'})
@@ -89,6 +93,10 @@ export const registerController = async(req,res)=>{
         }
         if(!email){
             return res.send({error: 'Email is required'})
+        }
+
+        if(!admin){
+            return res.send({error: 'Admin name is required'})
         }
         if(!password){
             return res.send({error: 'password is required'})
@@ -105,7 +113,7 @@ export const registerController = async(req,res)=>{
         const hashedPassword = await hashPassword(password)
         //save
         const balance='0'
-        const user = await new userModel({name,username, phone, email, password:hashedPassword, pin, role,balance}).save()
+        const user = await new userModel({name,username, phone, email,admin, password:hashedPassword, pin, role,balance}).save()
         res.status(201).send({
             success:true,
             message: 'user registered successfully',
@@ -162,6 +170,7 @@ export const loginController = async(req,res)=>{
             success:true,
             message:'Login successfull',
             user:{
+                admin: user.admin,
                 name: user.name,
                 username:user.username,
                 email: user.email,

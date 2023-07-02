@@ -11,7 +11,13 @@ import placeOfferOrderModel from "../models/placeOfferOrderModel.js"
 
 export const addMobileBankingOrderController = async(req,res)=>{
     try { 
-        const {receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+
+
+        console.log(req.body);
+        const {admin,receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        if(!admin){
+            return res.send({error: 'can not find admin'})
+        }
         
         if(!receiver){
             return res.send({error: 'can not find receiver'})
@@ -42,7 +48,7 @@ export const addMobileBankingOrderController = async(req,res)=>{
         }
 
 
-        const data = await new mobileBankingModel({receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+        const data = await new mobileBankingModel({admin,receiver,banking_method,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         
@@ -79,7 +85,10 @@ export const addMobileBankingOrderController = async(req,res)=>{
 export const addBankingOrderController = async(req,res)=>{
     try { 
         
-        const {bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        const {admin,bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        if(!admin){
+            return res.send({error: 'can not find admin'})
+        }
         
         if(!bank){
             return res.send({error: 'can not find bank'})
@@ -117,7 +126,7 @@ export const addBankingOrderController = async(req,res)=>{
 
 
 
-        const data = await new bankTransferModel({bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+        const data = await new bankTransferModel({admin,bank,branch,account_name,account_no,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         console.log(data);
@@ -154,17 +163,22 @@ export const addBankingOrderController = async(req,res)=>{
 
 
 export const addBillPayOrderController = async(req,res)=>{
+
+    
     try { 
         
         let data;
         
-        const {bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        const {admin,bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
         
         if(!type){
             return res.send({error: 'can not find type'})
 
         }
         if(type==='prepaid'){
+            if(!admin){
+                return res.send({error: 'can not find admin'})
+            }
             if(!bill_service){
                 return res.send({error: 'can not find bill service'})
             }
@@ -206,9 +220,12 @@ export const addBillPayOrderController = async(req,res)=>{
     
 
 
-            data = await new billPayModel({bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+            data = await new billPayModel({admin,bill_service,type,month,meter_no,account_no,contact_no,biller_name,amount,sender_username,sender_email,sender_phone,status,commission}).save()
 
         }else if(type==='postpaid'){
+            if(!admin){
+                return res.send({error: 'can not find admin'})
+            }
             if(!bill_service){
                 return res.send({error: 'can not find bill service'})
             }
@@ -236,7 +253,7 @@ export const addBillPayOrderController = async(req,res)=>{
             }
     
 
-            data = await new billPayModel({bill_service,type,account_no,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+            data = await new billPayModel({admin,bill_service,type,account_no,amount,sender_username,sender_email,sender_phone,status,commission}).save()
 
         }
         
@@ -283,7 +300,12 @@ export const addBillPayOrderController = async(req,res)=>{
 
 export const addRechargeOrderController = async(req,res)=>{
     try { 
-        const {recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        const {admin,recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission} = req.body
+        console.log(req.body);
+
+        if(!admin){
+            return res.send({error: 'can not find admin name'})
+        }
         
         if(!recipient){
             return res.send({error: 'can not find receiver'})
@@ -315,7 +337,10 @@ export const addRechargeOrderController = async(req,res)=>{
 
 
        
-        const data = await new rechargeModel({recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+        const data = await new rechargeModel({admin,recipient,operators,type,amount,sender_username,sender_email,sender_phone,status,commission}).save()
+
+
+        
        
         
         
@@ -352,7 +377,11 @@ export const addRechargeOrderController = async(req,res)=>{
 
 export const placeOfferOrderController = async(req,res)=>{
     try { 
-        const {recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission} = req.body
+        const {admin,recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission} = req.body
+
+        if(!admin){
+            return res.send({error: 'can not find admin'})
+        }
         
         if(!recipient){
             return res.send({error: 'can not find receiver'})
@@ -384,7 +413,7 @@ export const placeOfferOrderController = async(req,res)=>{
 
 
        
-        const data = await new placeOfferOrderModel({recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission}).save()
+        const data = await new placeOfferOrderModel({admin,recipient,operators,price,offer_name,sender_username,sender_email,sender_phone,status,commission}).save()
        
         
         
@@ -699,6 +728,8 @@ export const performTransactionController = async(req,res)=>{
     try {
         const {id,status,email,transaction,amount,commission} = req.body
 
+        console.log(req.body);
+
        
 
         
@@ -728,7 +759,7 @@ export const performTransactionController = async(req,res)=>{
         
 
     }else if(transaction==='bill-pay'){
-        await mobileBankingModel.findOneAndUpdate({_id:id},{status},{session})
+        await billPayModel.findOneAndUpdate({_id:id},{status},{session})
 
         
 
@@ -749,13 +780,37 @@ export const performTransactionController = async(req,res)=>{
         
         const doc = await userModel.findOne({email}).exec()
         const prevBalance = doc.balance
+
+
+        const intPrevBalance = parseInt(prevBalance)
+        const intAmount = parseInt(amount)
+
+        
+
+        console.log(`prev balance is : ${intPrevBalance}`);
+        console.log(`amount  is : ${intAmount}`);
         
        
-            const newBalance = parseInt(prevBalance)-parseInt(amount)
+            const newBalance = intPrevBalance-intAmount
+
+            console.log(`new balance is`);
+            console.log(newBalance);
+
+            const floatAmount = parseFloat(amount)
+            console.log('float amount is');
+            console.log(floatAmount);
+
+            const floatCommission =  parseFloat(commission)/100
+            console.log('float commission is');
+            console.log(floatCommission);
 
             
-            const commission_total = parseFloat(prevBalance)*parseFloat(commission)
+            const commission_total = floatAmount*floatCommission
+console.log('total commision is');
+            console.log(commission_total);
             const finalBalance = parseInt(newBalance+commission_total)
+
+            console.log(finalBalance);
 
        
         

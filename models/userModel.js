@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema({
 
 
     },
+
+    admin:{
+        type: String,
+        required: true,
+        
+
+
+    },
     password:{
         type:String,
         required:true,
