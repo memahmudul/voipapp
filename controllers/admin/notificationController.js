@@ -64,13 +64,17 @@ export const addNotificationController= async(req,res)=>{
 
 
 export const getAllNotificationController = async(req,res)=>{
+
+ 
     try { 
 
 
-
+      
         
  
     const result = await notificationModel.find({})
+
+
 
     
 

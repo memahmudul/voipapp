@@ -1,6 +1,6 @@
 import express from "express";
 
-import { requireAdminSignIn } from "../middlewares/authMiddleware.js";
+import { requireAdminSignIn, requireSignIn } from "../middlewares/authMiddleware.js";
 import { loginController, registerController } from "../controllers/admin/authController.js";
 import { addBalanceToUserController, cancelBalanceRequestController, confirmBalanceRequestController, editBalanceController, getBalanceRequestListController } from "../controllers/admin/balanceController.js";
 import { editFirstPaymentController, editSecondPaymentController } from "../controllers/admin/paymentController.js";
@@ -69,7 +69,7 @@ router.post('/delete-an-offers',requireAdminSignIn,deleteAnOfferController)
 
 
 router.post('/add-notification',requireAdminSignIn,addNotificationController)
-router.post('/get-all-notification',requireAdminSignIn,getAllNotificationController)
+router.post('/get-all-notification-by-user',requireSignIn,getAllNotificationController)
 router.post('/delete-notification',requireAdminSignIn,deleteNotificationController)
 
 
