@@ -9,6 +9,7 @@ import { editSliderImageController } from "../controllers/sliderController.js";
 import { deleteUserController, getAllUserController, getSingleUserController } from "../controllers/admin/userController.js";
 import { fetchAllBankingOrderController, fetchAllBillPayOrderController, fetchAllMobileBankingOrderController, fetchAllOfferOrderController, fetchAllRechargeOrderController } from "../controllers/admin/orderController.js";
 import { deleteAnOfferController, getAllOfferByAdminController, getAllOfferController } from "../controllers/offerController.js";
+import {  addNotificationController, deleteNotificationController, getAllNotificationController } from "../controllers/admin/notificationController.js";
 
 //router object
 const router = express.Router()
@@ -65,6 +66,11 @@ router.post('/get-all-offer-order',requireAdminSignIn,fetchAllOfferOrderControll
 router.post('/get-all-offers',requireAdminSignIn,getAllOfferByAdminController)
 
 router.post('/delete-an-offers',requireAdminSignIn,deleteAnOfferController)
+
+
+router.post('/add-notification',requireAdminSignIn,addNotificationController)
+router.post('/get-all-notification',requireAdminSignIn,getAllNotificationController)
+router.post('/delete-notification',requireAdminSignIn,deleteNotificationController)
 
 
 
