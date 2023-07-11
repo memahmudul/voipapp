@@ -80,7 +80,11 @@ export const getBalanceController = async(req,res)=>{
 export const addBalanceRequestController = async(req,res)=>{
     try { 
         
-        const {name,username,email,user_phone,sender_phone, trx_id,amount} = req.body
+        const {admin,name,username,email,user_phone,sender_phone, trx_id,amount} = req.body
+
+        if(!admin){
+            return res.send({error: 'Admin Name required'})
+        }
         
         
     if(!name){

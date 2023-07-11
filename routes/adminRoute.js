@@ -3,7 +3,7 @@ import express from "express";
 import { requireAdminSignIn, requireSignIn } from "../middlewares/authMiddleware.js";
 import { loginController, registerController } from "../controllers/admin/authController.js";
 import { addBalanceToUserController, cancelBalanceRequestController, confirmBalanceRequestController, editBalanceController, getBalanceRequestListController } from "../controllers/admin/balanceController.js";
-import { editFirstPaymentController, editSecondPaymentController } from "../controllers/admin/paymentController.js";
+import { addPaymentController, editFirstPaymentController, editSecondPaymentController, editThirdPaymentController } from "../controllers/admin/paymentController.js";
 import { addCommissionController, editCommissionController, getCommissionController } from "../controllers/comissionControler.js";
 import { editSliderImageController } from "../controllers/sliderController.js";
 import { deleteUserController, getAllUserController, getSingleUserController } from "../controllers/admin/userController.js";
@@ -31,6 +31,13 @@ router.post('/edit-balance',requireAdminSignIn,editBalanceController)
 
 router.post('/edit-first-payment-method',requireAdminSignIn,editFirstPaymentController)
 router.post('/edit-second-payment-method',requireAdminSignIn,editSecondPaymentController)
+router.post('/edit-third-payment-method',requireAdminSignIn,editThirdPaymentController)
+
+
+router.post('/add-all-payment-method',addPaymentController)
+
+
+
 
 
 router.post('/edit-commission',requireAdminSignIn,editCommissionController)
@@ -70,6 +77,7 @@ router.post('/delete-an-offers',requireAdminSignIn,deleteAnOfferController)
 
 router.post('/add-notification',requireAdminSignIn,addNotificationController)
 router.post('/get-all-notification-by-user',requireSignIn,getAllNotificationController)
+router.post('/get-all-notification',requireAdminSignIn,getAllNotificationController)
 router.post('/delete-notification',requireAdminSignIn,deleteNotificationController)
 
 

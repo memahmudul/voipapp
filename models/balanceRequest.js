@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const balanceRequest = new mongoose.Schema({
+    admin:{
+        type:String,
+        required:true,
+    },
 
     name:{
         type:String,

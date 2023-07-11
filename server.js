@@ -57,3 +57,5 @@ app.get('/',(req,res)=>{
   app.listen(PORT,'0.0.0.0')
 
   //192.168.248.1
+
+  //0.0.0.0 when upload to hosting site

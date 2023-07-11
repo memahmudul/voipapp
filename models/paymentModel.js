@@ -10,6 +10,11 @@ const paymentSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+
+    payment_method_3:{
+        type:String,
+        required:true,
+    },
     
 })
 
