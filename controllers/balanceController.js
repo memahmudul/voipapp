@@ -111,7 +111,7 @@ export const addBalanceRequestController = async(req,res)=>{
 
     
     // const result = await balanceRequest.findOne({email})
-    const result = await new balanceRequest({name,username,email,user_phone,sender_phone, trx_id,amount}).save()
+    const result = await new balanceRequest({admin,name,username,email,user_phone,sender_phone, trx_id,amount}).save()
         if(!result){
             return res.status(201).send({
                 success:false,
@@ -134,7 +134,7 @@ export const addBalanceRequestController = async(req,res)=>{
         
     } catch (error) {
         console.log(error);
-        res.status(500).send({
+        res.status(200).send({
             success:false,
             message: "error in placing add balance request",
             error
